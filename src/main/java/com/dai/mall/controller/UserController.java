@@ -2,6 +2,7 @@ package com.dai.mall.controller;
 
 import com.dai.mall.common.ApiRestResponse;
 import com.dai.mall.common.Constant;
+import com.dai.mall.exception.ImoocMallException;
 import com.dai.mall.exception.ImoocMallExceptionEnum;
 import com.dai.mall.model.pojo.User;
 import com.dai.mall.service.UserService;
@@ -94,6 +95,44 @@ public class UserController {
         user.setPersonalizedSignature(signature);
         userService.updateInformation(user);
         return ApiRestResponse.success();
+    }
+
+
+    /**
+     * 登出，清除session
+     */
+    @PostMapping("/user/logout")
+    @ResponseBody
+    public ApiRestResponse logout(HttpSession session) {
+        session.removeAttribute(Constant.IMOOC_MALL_USER);
+        return ApiRestResponse.success();
+    }
+
+    /**
+     * 管理员登录接口
+     */
+    @PostMapping("/adminLogin")
+    @ResponseBody
+    public ApiRestResponse adminLogin(@RequestParam("userName") String userName,
+                                      @RequestParam("password") String password, HttpSession session)
+            throws ImoocMallException {
+        if (StringUtils.isEmpty(userName)) {
+            return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_USER_NAME);
+        }
+        if (StringUtils.isEmpty(password)) {
+            return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_PASSWORD);
+        }
+        User user = userService.login(userName, password);
+        //校验是否是管理员
+        if (userService.checkAdminRole(user)) {
+            //是管理员，执行操作
+            //保存用户信息时，不保存密码
+            user.setPassword(null);
+            session.setAttribute(Constant.IMOOC_MALL_USER, user);
+            return ApiRestResponse.success(user);
+        } else {
+            return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_ADMIN);
+        }
     }
 
 }
