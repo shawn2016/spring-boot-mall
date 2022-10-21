@@ -3,7 +3,7 @@ package com.dai.mall.service;
 import com.dai.mall.exception.ImoocMallException;
 import com.dai.mall.model.pojo.User;
 
-public interface UserSeivice {
+public interface UserService {
 
     void register(String userName,String password) throws ImoocMallException;
 

@@ -4,7 +4,7 @@ import com.dai.mall.exception.ImoocMallException;
 import com.dai.mall.exception.ImoocMallExceptionEnum;
 import com.dai.mall.model.dao.UserMapper;
 import com.dai.mall.model.pojo.User;
-import com.dai.mall.service.UserSeivice;
+import com.dai.mall.service.UserService;
 import com.imooc.anti.Constant;
 import com.imooc.anti.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import java.security.NoSuchAlgorithmException;
 
 @Service
-public class UserServiceImpl implements UserSeivice {
+public class UserServiceImpl implements UserService {
     @Autowired
     UserMapper userMapper;
 

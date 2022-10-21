@@ -4,7 +4,7 @@ import com.dai.mall.common.ApiRestResponse;
 import com.dai.mall.common.Constant;
 import com.dai.mall.exception.ImoocMallExceptionEnum;
 import com.dai.mall.model.pojo.User;
-import com.dai.mall.service.UserSeivice;
+import com.dai.mall.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,7 +20,7 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     @Autowired
-    UserSeivice userSeivice;
+    UserService userService;
 
     @ApiOperation("test")
     @GetMapping("/test")
@@ -48,7 +48,7 @@ public class UserController {
           return ApiRestResponse.error(ImoocMallExceptionEnum.PASSWORD_TOO_SHORT);
         }
 
-        userSeivice.register(userName,password);
+        userService.register(userName,password);
         return ApiRestResponse.success();
     }
     /*
@@ -67,7 +67,7 @@ public class UserController {
         if (!StringUtils.hasText(password)) {
             return ApiRestResponse.error(ImoocMallExceptionEnum.NEED_PASSWORD);
         }
-        User user = userSeivice.login(userName,password);
+        User user = userService.login(userName,password);
 
         user.setPassword(null);
 
@@ -92,7 +92,7 @@ public class UserController {
         User user = new User();
         user.setId(currentUser.getId());
         user.setPersonalizedSignature(signature);
-        userSeivice.updateInformation(user);
+        userService.updateInformation(user);
         return ApiRestResponse.success();
     }
 

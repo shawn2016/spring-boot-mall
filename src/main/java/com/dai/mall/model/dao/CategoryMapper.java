@@ -1,7 +1,9 @@
 package com.dai.mall.model.dao;
 
 import com.dai.mall.model.pojo.Category;
+import org.springframework.stereotype.Service;
 
+@Service
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
 
@@ -14,4 +16,6 @@ public interface CategoryMapper {
     int updateByPrimaryKeySelective(Category record);
 
     int updateByPrimaryKey(Category record);
+
+    Category selectByName(String name);
 }
