@@ -3,6 +3,8 @@ package com.dai.mall.model.dao;
 import com.dai.mall.model.pojo.Category;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public interface CategoryMapper {
     int deleteByPrimaryKey(Integer id);
@@ -18,4 +20,8 @@ public interface CategoryMapper {
     int updateByPrimaryKey(Category record);
 
     Category selectByName(String name);
+
+    List<Category> selectList();
+
+    List<Category> selectCategoriesByParentId(Integer parentId);
 }
